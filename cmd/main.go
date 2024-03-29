@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	xssecgo "github.com/SAP-samples/cloud-security-client-golang-xsuaa"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/config"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/middleware"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/middleware/helper"
+	xssecgo "github.com/yogeshberia/cloud-security-client-golang-xsuaa"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/config"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/middleware"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/middleware/helper"
 	"net/http"
 )
 

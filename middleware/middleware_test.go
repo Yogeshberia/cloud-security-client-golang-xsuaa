@@ -1,16 +1,16 @@
 package middleware
 
 import (
-	xssecgo "github.com/SAP-samples/cloud-security-client-golang-xsuaa"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/config"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/middleware/helper"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/util"
-	"github.com/dgrijalva/jwt-go/v4"
-	"github.com/stretchr/testify/assert"
-
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/golang-jwt/jwt/v5"
+	xssecgo "github.com/yogeshberia/cloud-security-client-golang-xsuaa"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/config"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/middleware/helper"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/util"
+	"github.com/stretchr/testify/assert"
 )
 
 // {
@@ -99,7 +99,7 @@ func TestSecurityContextInMiddleware(t *testing.T) {
 	key, _ := util.GetRSAKeyFromString(TEST_PUBLIC_KEY)
 	// create the handler to test, using our custom "next" handler
 	middleware, err := NewXssecMiddleware(TEST_XSUAA_CONFIG, Options{
-		ValidationKeyGetter: jwt.KnownKeyfunc(jwt.SigningMethodRS256, key),
+		ValidationKeyGetter: util.KnownKeyfunc(jwt.SigningMethodRS256, key),
 	})
 
 	if err != nil {
@@ -131,7 +131,7 @@ func TestLocalScopesHandlerInMiddlewareShouldPass(t *testing.T) {
 	key, _ := util.GetRSAKeyFromString(TEST_PUBLIC_KEY)
 	// create the handler to test, using our custom "next" handler
 	middleware, err := NewXssecMiddleware(TEST_XSUAA_CONFIG_FOR_SCOPE_TOKEN, Options{
-		ValidationKeyGetter: jwt.KnownKeyfunc(jwt.SigningMethodRS256, key),
+		ValidationKeyGetter: util.KnownKeyfunc(jwt.SigningMethodRS256, key),
 	})
 
 	if err != nil {
@@ -158,7 +158,7 @@ func TestLocalScopesHandlerInMiddlewareShouldFail(t *testing.T) {
 	key, _ := util.GetRSAKeyFromString(TEST_PUBLIC_KEY)
 	// create the handler to test, using our custom "next" handler
 	middleware, err := NewXssecMiddleware(TEST_XSUAA_CONFIG_FOR_SCOPE_TOKEN, Options{
-		ValidationKeyGetter: jwt.KnownKeyfunc(jwt.SigningMethodRS256, key),
+		ValidationKeyGetter: util.KnownKeyfunc(jwt.SigningMethodRS256, key),
 	})
 
 	if err != nil {

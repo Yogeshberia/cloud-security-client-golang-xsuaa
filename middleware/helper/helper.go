@@ -2,7 +2,7 @@ package helper
 
 import (
 	"fmt"
-	xssecgo "github.com/SAP-samples/cloud-security-client-golang-xsuaa"
+	xssecgo "github.com/yogeshberia/cloud-security-client-golang-xsuaa"
 	"net/http"
 )
 

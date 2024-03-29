@@ -3,9 +3,10 @@ package validation
 import (
 	"errors"
 	"fmt"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/util"
-	"github.com/dgrijalva/jwt-go/v4"
 	"strings"
+
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/util"
 )
 
 const DOT = "."

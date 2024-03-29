@@ -4,14 +4,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	xssecgo "github.com/SAP-samples/cloud-security-client-golang-xsuaa"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/config"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/validation"
-	"github.com/dgrijalva/jwt-go/v4"
-
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/golang-jwt/jwt/v5"
+	xssecgo "github.com/yogeshberia/cloud-security-client-golang-xsuaa"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/config"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/validation"
 )
 
 type XssecMiddleware struct {

@@ -1,7 +1,7 @@
 package validation
 
 import (
-	"github.com/dgrijalva/jwt-go/v4"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type JKUValidationFunc func(jkuUrl, uaaDomain string) (bool, error)

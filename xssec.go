@@ -3,13 +3,13 @@ package xssecgo
 import (
 	"encoding/json"
 	"errors"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/config"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/util"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/validation"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/verification"
-	"github.com/dgrijalva/jwt-go/v4"
 	"strings"
-	"time"
+
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/config"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/util"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/validation"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/verification"
 )
 
 const XSAPPNAMEPREFIX = "$XSAPPNAME."
@@ -111,7 +111,7 @@ func NewXssecContext(rawToken string, xsuaaConfig config.XsuaaConfig, xssecOptio
 	}
 
 	// decode and verify token with KeyFunc
-	decodedToken, err := jwt.Parse(rawToken, validationKeyGetter, jwt.WithoutAudienceValidation(), jwt.WithLeeway(1*time.Minute))
+	decodedToken, err := jwt.Parse(rawToken, validationKeyGetter)
 
 	if err != nil {
 		return nil, err
@@ -125,7 +125,7 @@ func NewXssecContext(rawToken string, xsuaaConfig config.XsuaaConfig, xssecOptio
 
 	// lazy --> use raw json to convert to go struct
 	// you might create a PR and map all custom claims to go :)
-	jsonStringClaims, decodeErr := jwt.DecodeSegment(strings.Split(decodedToken.Raw, ".")[1])
+	jsonStringClaims, decodeErr :=  jwt.NewParser(jwt.WithPaddingAllowed()).DecodeSegment(strings.Split(decodedToken.Raw, ".")[1])
 	if decodeErr != nil {
 		return nil, errors.New("something went wrong decoding body base64 to json")
 	}

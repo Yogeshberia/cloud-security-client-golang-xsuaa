@@ -1,13 +1,15 @@
 package verification
 
 import (
+	"context"
 	"errors"
 	"fmt"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/config"
-	"github.com/SAP-samples/cloud-security-client-golang-xsuaa/validation"
-	"github.com/dgrijalva/jwt-go/v4"
+
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/lestrrat-go/jwx/jwk"
 	"github.com/patrickmn/go-cache"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/config"
+	"github.com/yogeshberia/cloud-security-client-golang-xsuaa/validation"
 )
 
 // function with no cache implementation --> Each time a validation is made, the public key is been downloaded!
@@ -36,15 +38,15 @@ func ValidationKeyGetter(xsuaaConfig config.XsuaaConfig, validateJKU validation.
 			return nil, errors.New("expecting JWT header to have string kid")
 		}
 
-		jwks, err := jwk.FetchHTTP(tokenUrl)
+		jwks, err := jwk.Fetch(context.Background(), tokenUrl)
 		if err != nil {
 			return nil, errors.New("can't fetch public JWKS")
 		}
 
-		if key := jwks.LookupKeyID(keyID); len(key) == 1 {
+		if key, found := jwks.LookupKeyID(keyID); found {
 
 			var rawKey interface{}
-			if err := key[0].Raw(&rawKey); err != nil {
+			if err := key.Raw(&rawKey); err != nil {
 				return nil, err
 			} else {
 				return rawKey, nil
@@ -91,19 +93,16 @@ func ValidationKeyGetterWithCacheConfigurable(xsuaaConfig config.XsuaaConfig, va
 		jwks, found := configCache.Get(cacheKey)
 		if !found {
 			var err error
-			jwks, err = jwk.FetchHTTP(tokenUrl)
+			jwks, err = jwk.Fetch(context.Background(), tokenUrl)
 			if err != nil {
-				return nil, errors.New("Can't fetch public JWKS")
+				return nil, fmt.Errorf("can't fetch public JWKS")
 			}
 			configCache.Set(cacheKey, jwks, cache.DefaultExpiration)
 		}
 
-		typedKey, found := configCache.Get(cacheKey)
-
-		if key := typedKey.(*jwk.Set).LookupKeyID(keyID); len(key) == 1 {
-
+		if key, ok := jwks.(jwk.Set).LookupKeyID(keyID); ok {
 			var rawKey interface{}
-			if err := key[0].Raw(&rawKey); err != nil {
+			if err := key.Raw(&rawKey); err != nil {
 				return nil, err
 			} else {
 				return rawKey, nil

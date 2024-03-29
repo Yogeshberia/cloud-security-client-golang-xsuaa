@@ -1,9 +1,4 @@
-![](https://img.shields.io/badge/STATUS-NOT%20CURRENTLY%20MAINTAINED-red.svg?longCache=true&style=flat)
-
-# Important Notice
-This public repository is read-only and no longer maintained. For the latest sample code repositories, visit the [SAP Samples](https://github.com/SAP-samples) organization.
-
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-security-client-golang-xsuaa)](https://api.reuse.software/info/github.com/SAP-samples/cloud-security-client-golang-xsuaa)
+[![REUSE status](https://api.reuse.software/badge/github.com/yogeshberia/cloud-security-client-golang-xsuaa)](https://api.reuse.software/info/github.com/yogeshberia/cloud-security-client-golang-xsuaa)
 
 # XSUAA Golang client library sample for SAP Business Technology Platform
 Sample library to show how to use XSUAA in Golang applications running on SAP Business Technology Platform.
@@ -42,7 +37,7 @@ Like with every Golang lib you just need to import it:
 
 ```golang
 import (
-        xssecgo "github.com/SAP-samples/cloud-security-client-golang-xsuaa"
+        xssecgo "github.com/yogeshberia/cloud-security-client-golang-xsuaa"
         )
 ```
 
@@ -163,7 +158,7 @@ Nothing found so far ;)
 
 ## How to obtain support
 
-[Create an issue](https://github.com/SAP-samples/cloud-security-client-golang-xsuaa/issues) in this repository if you find a bug or have questions about the content.
+[Create an issue](https://github.com/yogeshberia/cloud-security-client-golang-xsuaa/issues) in this repository if you find a bug or have questions about the content.
  
 For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
